@@ -50,18 +50,19 @@ The brief asks for instrumentation around **Repeat Visits** and **Meaningful Act
 - **Mock data over a real backend.** 1-week scope rewards an engaging, integrated experience over infra. Domain types live in `data.ts` so a real API can slot in behind the same interfaces.
 - **SSG for all detail pages** for fast first paint; content is static per the mock data.
 - **Ambient world videos as the spine** — differentiates from the flat real product, drives repeat visits. Tradeoff: video weight — mitigated with WebM+poster, lazy `use-in-view` playback, `prefers-reduced-motion` fallbacks.
-- **Analytics decoupled from vendor.** The taxonomy + sink is the testable core; posthog-js is a thin adapter the user attaches. Swapping vendors is a one-file change and events unit-test without a network.
+- **Analytics decoupled from vendor.** The taxonomy + sink is the testable core; [`posthog.ts`](src/lib/posthog.ts) is the only vendor adapter. Swapping vendors is a one-file change and events unit-test (via `captureSink`) without a network or the SDK.
+- **No world-name labels.** The old `worldName` field ("The Signal", etc.) was removed from the data model entirely; surfaces show the real `title`. `world` (the ambient clip key) stays.
 - **Explicit hierarchy helpers** (`structure.ts`) make the Community → Fundraiser → Profile structure legible and refactor-safe.
 - **Lanterns as a lightweight meaning-action** — a free, emotional signal (vs. donating) that lowers the bar for participation.
 - **Deterministic, rounded values in SSR'd inline styles** ([`seeded.ts`](src/lib/seeded.ts)) to avoid hydration mismatches from full-precision float CSS.
 
 ## Quality gates
 
-`pnpm typecheck`, `pnpm lint`, `pnpm test` (40 tests, 13 files), and `pnpm build` all pass. Build prerenders `/`, `/communities`, `/communities/wildfire-watch`, `/f/{alerts,shelter,replant}`, `/u/janahan`.
+`pnpm typecheck`, `pnpm lint`, `pnpm test` (41 tests, 13 files), and `pnpm build` all pass. Build prerenders `/`, `/communities`, `/communities/wildfire-watch`, `/f/{alerts,shelter,replant}`, `/u/janahan`.
 
 ## What's next
 
-- [ ] Wire posthog-js into `setAnalyticsSink` and verify events land (user-owned).
+- [ ] Verify PostHog events land in the dashboard (live key in `.env`; do an end-to-end smoke check in the browser).
 - [ ] Capture/document real page-load benchmarks (Lighthouse / Web Vitals) — brief asks for it.
 - [ ] Deploy (Vercel easiest for Next 16; AWS "preferred" not required).
 - [ ] Add a `SiteProvider`/`AnalyticsProvider` test asserting events fire through an injected sink.
