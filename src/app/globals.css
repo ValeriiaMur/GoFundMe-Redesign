@@ -50,7 +50,7 @@
   --color-foreground: var(--text);
 }
 
-/* ============ BEACON DESIGN SYSTEM ============ */
+/* ============ GOFUNDME DESIGN SYSTEM ============ */
 :root {
   --font-display: "Newsreader", Georgia, serif;
   --font-body: "Hanken Grotesk Variable", system-ui, sans-serif;
@@ -408,3 +408,14 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .lantern, .cel-light, .bgstar, .lantern-big, .lcard-flame { animation: none !important; }
 }
+
+/* --- Discover / home index --- */
+.page-discover { display: flex; flex-direction: column; gap: 8px; padding-top: 8px; }
+.discover-hero { padding-top: 24px; }
+.kicker { font-family: var(--font-mono-x); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+.discover-h { font-family: var(--font-display); font-weight: 500; font-size: clamp(34px, 5.4vw, 64px); line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 14px; max-width: 18ch; }
+.discover-sub { color: var(--dim); font-size: clamp(15px, 1.6vw, 19px); max-width: 56ch; margin: 0; }
+.tile-stats { display: flex; gap: 18px; margin-top: 10px; font-size: 13px; color: var(--dim); }
+.tile-stats b { color: var(--fg, inherit); font-variant-numeric: tabular-nums; }
+.inline-link { font: inherit; color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.inline-link:hover { filter: brightness(1.1); }

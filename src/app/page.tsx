@@ -1,5 +1,5 @@
-import { CommunityPage } from "@/components/community/community-page";
+import { DiscoverPage } from "@/components/home/discover-page";
 
 export default function HomePage() {
-  return <CommunityPage id="watch" />;
+  return <DiscoverPage />;
 }

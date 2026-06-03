@@ -1,6 +1,7 @@
 "use client";
 
 import { FUNDRAISERS, PROFILES } from "@/lib/data";
+import { communityOf } from "@/lib/structure";
 import { useSite } from "@/components/app/site-provider";
 import { FundraiserHero } from "@/components/fundraiser/fundraiser-hero";
 import { SiblingCard } from "@/components/fundraiser/sibling-card";
@@ -25,6 +26,7 @@ export function FundraiserPage({ id }: { id: string }) {
     lantern: () => site.openLantern({ kind: "fundraiser", id }),
   };
   const feed = site.feed.filter((a) => a.target === id || a.who.id === PROFILES.janahan.id);
+  const community = communityOf(f);
   const siblings = f.community
     ? Object.values(FUNDRAISERS).filter((s) => s.community === f.community && s.id !== f.id)
     : [];
@@ -53,14 +55,23 @@ export function FundraiserPage({ id }: { id: string }) {
 
           {siblings.length > 0 && (
             <section className="block">
-              <h2 className="block-h">Part of the same watch</h2>
+              <h2 className="block-h">
+                Part of{" "}
+                {community ? (
+                  <button className="inline-link" onClick={() => site.goCommunity(community.handle)}>
+                    {community.name}
+                  </button>
+                ) : (
+                  "the same watch"
+                )}
+              </h2>
               <div className="sibling-row">
                 {siblings.map((s) => (
                   <SiblingCard
                     key={s.id}
                     f={s}
                     raised={site.raisedFor(s.id)}
-                    onClick={() => site.goFundraiser(s.id)}
+                    onClick={() => site.goCause(s.id)}
                   />
                 ))}
               </div>

@@ -67,7 +67,7 @@ export function CommunityPage({ id = "watch" }: { id?: string }) {
             </p>
             <div className="world-grid">
               {fundraisers.map((f) => (
-                <CauseCard key={f.id} f={f} raised={site.raisedFor(f.id)} onClick={() => site.goFundraiser(f.id)} />
+                <CauseCard key={f.id} f={f} raised={site.raisedFor(f.id)} onClick={() => site.goCause(f.id)} />
               ))}
             </div>
           </section>
@@ -85,7 +85,7 @@ export function CommunityPage({ id = "watch" }: { id?: string }) {
               title="The watch right now"
               accent={c.accent}
               onItem={(a) => {
-                if (FUNDRAISERS[a.target]) site.goFundraiser(a.target);
+                if (FUNDRAISERS[a.target]) site.goCause(a.target);
               }}
             />
           </div>
