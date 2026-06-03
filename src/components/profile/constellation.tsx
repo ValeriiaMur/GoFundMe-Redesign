@@ -3,7 +3,7 @@
 import { type CSSProperties, useEffect, useState } from "react";
 
 import type { ConstellationNode } from "@/lib/data";
-import { seeded } from "@/lib/seeded";
+import { fixed, seeded } from "@/lib/seeded";
 import { cn } from "@/lib/utils";
 
 export interface ConstellationProps {
@@ -56,12 +56,12 @@ export function Constellation({ nodes, onSelect, variant = "card" }: Constellati
             className="bgstar"
             style={
               {
-                left: `${seeded(i) * 100}%`,
-                top: `${seeded(i + 50) * 100}%`,
+                left: `${fixed(seeded(i) * 100)}%`,
+                top: `${fixed(seeded(i + 50) * 100)}%`,
                 "--o": (0.12 + seeded(i + 9) * 0.5).toFixed(2),
-                animationDelay: `${-seeded(i) * 4}s`,
-                width: `${1 + seeded(i + 3) * 1.7}px`,
-                height: `${1 + seeded(i + 3) * 1.7}px`,
+                animationDelay: `${fixed(-seeded(i) * 4)}s`,
+                width: `${fixed(1 + seeded(i + 3) * 1.7)}px`,
+                height: `${fixed(1 + seeded(i + 3) * 1.7)}px`,
               } as CSSProperties
             }
           />

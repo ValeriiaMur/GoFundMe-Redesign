@@ -10,6 +10,7 @@ import "@fontsource/space-mono/400.css";
 import "@fontsource/space-mono/700.css";
 import "./globals.css";
 
+import { AnalyticsProvider } from "@/components/app/analytics-provider";
 import { SiteProvider } from "@/components/app/site-provider";
 import { AppShell } from "@/components/app/app-shell";
 
@@ -26,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dawn" data-type="humanist" className="h-full antialiased">
       <body className="min-h-full">
-        <SiteProvider>
-          <AppShell>{children}</AppShell>
-        </SiteProvider>
+        <AnalyticsProvider>
+          <SiteProvider>
+            <AppShell>{children}</AppShell>
+          </SiteProvider>
+        </AnalyticsProvider>
       </body>
     </html>
   );

@@ -19,6 +19,7 @@ import {
   type Activity,
 } from "@/lib/data";
 import { crossedMilestone } from "@/lib/progress";
+import { track } from "@/lib/analytics";
 import { Celebration } from "@/components/shared/celebration";
 import { Toast, type ToastData } from "@/components/shared/toast";
 import { DonateModal } from "@/components/shared/donate-modal";
@@ -44,6 +45,7 @@ export interface SiteContextValue {
   join: () => void;
   followPerson: () => void;
   goHome: () => void;
+  goCommunities: () => void;
   goCommunity: (handle: string) => void;
   goCause: (id: string) => void;
   goProfile: (handle: string) => void;
@@ -106,10 +108,14 @@ export function SiteProvider({ children }: { children: ReactNode }) {
       setCel({ fire: Date.now(), accent: f.accent });
       setDonateTarget(null);
       const crossed = crossedMilestone(f.milestones, before, after);
+      track({
+        name: "donate",
+        props: { causeId: id, communityId: f.community, amount, milestone: crossed?.label },
+      });
       showToast(
         crossed
           ? `✦ Milestone reached: ${crossed.label}!`
-          : `Your light is planted. ${f.worldName} just grew.`,
+          : `Your light is planted. This world just grew.`,
       );
     },
     [prepend, raisedById, showToast],
@@ -122,12 +128,17 @@ export function SiteProvider({ children }: { children: ReactNode }) {
       prepend({ who: PROFILE, type: "lantern", msg, target: id });
       setLanternTarget(null);
       setCel({ fire: Date.now(), accent: 88 });
+      track({
+        name: "share_lantern",
+        props: { targetKind: target.kind === "fundraiser" ? "cause" : target.kind, targetId: target.id },
+      });
       showToast("Lantern released. Link copied to share.");
     },
     [prepend, showToast],
   );
 
   const goHome = useCallback(() => router.push(`/`), [router]);
+  const goCommunities = useCallback(() => router.push(`/communities`), [router]);
   const goCause = useCallback((id: string) => router.push(`/f/${id}`), [router]);
   const goCommunity = useCallback(
     (handle: string) => router.push(`/communities/${handle}`),
@@ -148,18 +159,25 @@ export function SiteProvider({ children }: { children: ReactNode }) {
       openDonate: (id) => setDonateTarget(id),
       openLantern: (t) => setLanternTarget(t),
       follow: (id) => {
+        const following = !followedById[id];
         setFollowed((s) => ({ ...s, [id]: !s[id] }));
+        track({ name: "follow", props: { targetKind: "cause", targetId: id, following } });
         showToast(followedById[id] ? "You stopped watching." : "You're keeping watch. We'll send you updates.");
       },
       join: () => {
+        const next = !joined;
         setJoined((j) => !j);
+        track({ name: "join_community", props: { communityId: COMMUNITIES.watch.id, joined: next } });
         showToast(joined ? "You left the watch." : "Welcome to the watch. 12,481 strong.");
       },
       followPerson: () => {
+        const following = !followingPerson;
         setFollowingPerson((v) => !v);
+        track({ name: "follow", props: { targetKind: "person", targetId: PROFILE.id, following } });
         showToast(followingPerson ? "Unfollowed." : "Following Janahan. You'll see their lights.");
       },
       goHome,
+      goCommunities,
       goCommunity,
       goCause,
       goProfile,
@@ -177,6 +195,7 @@ export function SiteProvider({ children }: { children: ReactNode }) {
       feed,
       showToast,
       goHome,
+      goCommunities,
       goCommunity,
       goCause,
       goProfile,

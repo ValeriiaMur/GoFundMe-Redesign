@@ -14,7 +14,6 @@ export function CommunityTile({ community: c, onClick }: CommunityTileProps) {
     <button className="world-card" onClick={onClick}>
       <div className="world-card-vid">
         <WorldVideo world={getWorld(c.world)} lazy dim={0.32} />
-        <span className="world-card-name">{c.worldName}</span>
       </div>
       <div className="world-card-meta">
         <div className="world-card-title">{c.name}</div>

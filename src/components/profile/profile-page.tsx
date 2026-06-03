@@ -89,7 +89,7 @@ export function ProfilePage({ handle }: { handle: string }) {
                 <div className="impact-outcome">{im.outcome}</div>
                 <div className="impact-cause">
                   <span className="impact-dot" />{" "}
-                  {FUNDRAISERS[im.cause] ? FUNDRAISERS[im.cause].worldName : "The Watch"}
+                  {FUNDRAISERS[im.cause] ? FUNDRAISERS[im.cause].title : "Wildfire Watch"}
                 </div>
               </button>
             ))}

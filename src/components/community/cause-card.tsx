@@ -18,7 +18,6 @@ export function CauseCard({ f, raised, intensity = 1, onClick }: CauseCardProps)
       <div className="world-card-vid">
         <WorldVideo world={getWorld(f.world)} lazy dim={0.28} />
         <WorldGrow progress={Math.min(1, raised / f.goal)} intensity={intensity * 0.7} accent={f.accent} dense={false} />
-        <span className="world-card-name">{f.worldName}</span>
       </div>
       <div className="world-card-meta">
         <div className="world-card-title">{f.title}</div>

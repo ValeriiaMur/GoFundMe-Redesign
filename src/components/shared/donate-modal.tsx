@@ -22,7 +22,7 @@ export function DonateModal({ fundraiser, onClose, onConfirm }: DonateModalProps
 
   return (
     <Modal onClose={onClose} accent={fundraiser.accent}>
-      <div className="modal-kicker">Plant a light · {fundraiser.worldName}</div>
+      <div className="modal-kicker">Plant a light</div>
       <h3 className="modal-title">Your light becomes part of {fundraiser.title.toLowerCase()}.</h3>
       <p className="modal-sub">Every light you plant makes this world grow — visibly, for everyone watching.</p>
       <div className="amt-grid">

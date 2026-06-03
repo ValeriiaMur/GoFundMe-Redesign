@@ -89,17 +89,6 @@ export function ScrollyStory({ f, intensity = 1 }: ScrollyStoryProps) {
         <div className="scrolly-cue" style={{ opacity: prog < 0.035 ? 0.7 : 0 }}>
           scroll the story ↓
         </div>
-        <div
-          className="scrolly-name"
-          style={{
-            opacity:
-              prog < 0.035
-                ? 0
-                : Math.min(1, (prog - 0.02) * 6) * (prog > 0.96 ? Math.max(0, (1 - prog) * 25) : 1),
-          }}
-        >
-          {f.worldName}
-        </div>
       </div>
     </section>
   );

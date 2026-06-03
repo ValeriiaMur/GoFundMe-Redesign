@@ -3,7 +3,7 @@
 import { type RefObject } from "react";
 import { usePathname } from "next/navigation";
 
-import { BRAND, COMMUNITIES, PROFILES } from "@/lib/data";
+import { BRAND, PROFILES } from "@/lib/data";
 import { Avatar } from "@/components/shared/avatar";
 import { useSite } from "@/components/app/site-provider";
 import { cn } from "@/lib/utils";
@@ -15,9 +15,9 @@ export interface HeaderProps {
 /** Fixed top chrome: the docking emblem slot, wordmark, nav, and profile. */
 export function Header({ slotRef }: HeaderProps) {
   const pathname = usePathname();
-  const { goHome, goCommunity, goCause, goProfile } = useSite();
+  const { goHome, goCommunities, goProfile } = useSite();
+  const onHome = pathname === "/";
   const onCommunity = pathname.startsWith("/communities");
-  const onCause = pathname.startsWith("/f");
 
   return (
     <header className="hdr">
@@ -29,14 +29,11 @@ export function Header({ slotRef }: HeaderProps) {
         </button>
       </div>
       <nav className="hdr-nav">
-        <button
-          className={cn("navlink", onCommunity && "on")}
-          onClick={() => goCommunity(COMMUNITIES.watch.handle)}
-        >
-          The Watch
+        <button className={cn("navlink", onHome && "on")} onClick={goHome}>
+          Home
         </button>
-        <button className={cn("navlink", onCause && "on")} onClick={() => goCause("alerts")}>
-          Causes
+        <button className={cn("navlink", onCommunity && "on")} onClick={goCommunities}>
+          Communities
         </button>
       </nav>
       <div className="hdr-right">

@@ -61,9 +61,9 @@ export function CommunityPage({ id = "watch" }: { id?: string }) {
       <div className="cbody">
         <main className="cbody-main">
           <section className="block">
-            <h2 className="block-h">Causes alight in this watch</h2>
+            <h2 className="block-h">Fundraisers in this community</h2>
             <p className="block-sub">
-              Every light planted here grows the whole watershed. {money(totalRaised)} of {money(totalGoal)} together.
+              {fundraisers.length} fundraisers, raising together — {money(totalRaised)} of {money(totalGoal)}.
             </p>
             <div className="world-grid">
               {fundraisers.map((f) => (
