@@ -1,4 +1,4 @@
-import { seeded, lerp } from "@/lib/seeded";
+import { seeded, lerp, fixed } from "@/lib/seeded";
 
 export interface WorldGrowProps {
   /** 0–1 funding progress; more progress = more lanterns + glow. */
@@ -17,19 +17,19 @@ export function WorldGrow({ progress = 0, intensity = 1, accent = 52, dense = tr
     const r2 = seeded(i + 7);
     const r3 = seeded(i + 13);
     const r4 = seeded(i + 19);
-    const size = 3 + r2 * 6;
-    const hue = accent + (r3 - 0.5) * 26;
+    const size = fixed(3 + r2 * 6);
+    const hue = fixed(accent + (r3 - 0.5) * 26);
     return (
       <span
         key={i}
         className="lantern"
         style={{
-          left: `${r1 * 100}%`,
+          left: `${fixed(r1 * 100)}%`,
           width: `${size}px`,
           height: `${size}px`,
           background: `radial-gradient(circle at 40% 35%, oklch(0.92 0.13 ${hue}), oklch(0.74 0.16 ${hue}) 55%, transparent 72%)`,
-          animationDuration: `${9 + r4 * 10}s`,
-          animationDelay: `${-r3 * 16}s`,
+          animationDuration: `${fixed(9 + r4 * 10)}s`,
+          animationDelay: `${fixed(-r3 * 16)}s`,
         }}
       />
     );
@@ -40,7 +40,7 @@ export function WorldGrow({ progress = 0, intensity = 1, accent = 52, dense = tr
       <div
         className="world-grow-glow"
         style={{
-          opacity: lerp(0.12, 0.5, progress) * intensity,
+          opacity: fixed(lerp(0.12, 0.5, progress) * intensity),
           background: `radial-gradient(120% 80% at 50% 116%, oklch(0.78 0.16 ${accent} / 0.9), transparent 60%)`,
         }}
       />

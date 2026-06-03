@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { seeded, lerp } from "@/lib/seeded";
+import { seeded, lerp, fixed } from "@/lib/seeded";
 
 describe("seeded", () => {
   it("is deterministic and within [0,1)", () => {
@@ -15,5 +15,13 @@ describe("lerp", () => {
     expect(lerp(0, 10, 0.5)).toBe(5);
     expect(lerp(0, 10, -1)).toBe(0);
     expect(lerp(0, 10, 2)).toBe(10);
+  });
+});
+
+describe("fixed", () => {
+  it("rounds to a stable number of decimals", () => {
+    expect(fixed(5.721816935692914)).toBe(5.722);
+    expect(fixed(16.60377313970821, 2)).toBe(16.6);
+    expect(fixed(4)).toBe(4);
   });
 });
