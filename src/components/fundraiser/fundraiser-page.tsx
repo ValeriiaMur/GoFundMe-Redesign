@@ -1,7 +1,7 @@
 "use client";
 
-import { FUNDRAISERS, PROFILES } from "@/lib/data";
-import { communityOf } from "@/lib/structure";
+import { PROFILES } from "@/lib/data";
+import { communityOf, getCause, siblingCauses } from "@/lib/structure";
 import { useSite } from "@/components/app/site-provider";
 import { FundraiserHero } from "@/components/fundraiser/fundraiser-hero";
 import { SiblingCard } from "@/components/fundraiser/sibling-card";
@@ -14,7 +14,7 @@ import { ActionBar } from "@/components/shared/action-bar";
 
 export function FundraiserPage({ id }: { id: string }) {
   const site = useSite();
-  const f = FUNDRAISERS[id];
+  const f = getCause(id);
   if (!f) return null;
 
   const raised = site.raisedFor(id);
@@ -27,9 +27,7 @@ export function FundraiserPage({ id }: { id: string }) {
   };
   const feed = site.feed.filter((a) => a.target === id || a.who.id === PROFILES.janahan.id);
   const community = communityOf(f);
-  const siblings = f.community
-    ? Object.values(FUNDRAISERS).filter((s) => s.community === f.community && s.id !== f.id)
-    : [];
+  const siblings = siblingCauses(f);
 
   return (
     <div className="page page-fundraiser">

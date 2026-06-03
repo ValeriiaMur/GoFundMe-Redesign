@@ -39,6 +39,10 @@ export function listCauses(): Cause[] {
   return Object.values(FUNDRAISERS);
 }
 
+export function listProfiles(): Profile[] {
+  return Object.values(PROFILES);
+}
+
 /** Down the hierarchy: every cause that belongs to a community, in declared order. */
 export function causesOf(community: Community): Cause[] {
   return community.fundraisers

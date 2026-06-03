@@ -1,6 +1,7 @@
 "use client";
 
-import { COMMUNITIES, FUNDRAISERS, money } from "@/lib/data";
+import { money } from "@/lib/data";
+import { causesOf, getCause, getCommunity } from "@/lib/structure";
 import { getWorld } from "@/lib/worlds";
 import { useSite } from "@/components/app/site-provider";
 import { WorldVideo } from "@/components/world/world-video";
@@ -12,10 +13,10 @@ import { StewardList } from "@/components/community/steward-list";
 
 export function CommunityPage({ id = "watch" }: { id?: string }) {
   const site = useSite();
-  const c = COMMUNITIES[id];
+  const c = getCommunity(id);
   if (!c) return null;
 
-  const fundraisers = c.fundraisers.map((fid) => FUNDRAISERS[fid]);
+  const fundraisers = causesOf(c);
   const totalRaised = fundraisers.reduce((s, f) => s + site.raisedFor(f.id), 0);
   const totalGoal = fundraisers.reduce((s, f) => s + f.goal, 0);
   const progress = Math.min(1, totalRaised / totalGoal);
@@ -85,7 +86,7 @@ export function CommunityPage({ id = "watch" }: { id?: string }) {
               title="The watch right now"
               accent={c.accent}
               onItem={(a) => {
-                if (FUNDRAISERS[a.target]) site.goCause(a.target);
+                if (getCause(a.target)) site.goCause(a.target);
               }}
             />
           </div>

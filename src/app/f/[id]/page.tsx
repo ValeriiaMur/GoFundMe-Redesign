@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
 
-import { FUNDRAISERS } from "@/lib/data";
+import { getCause, listCauses } from "@/lib/structure";
 import { FundraiserPage } from "@/components/fundraiser/fundraiser-page";
 
 export function generateStaticParams() {
-  return Object.keys(FUNDRAISERS).map((id) => ({ id }));
+  return listCauses().map((c) => ({ id: c.id }));
 }
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  if (!FUNDRAISERS[id]) notFound();
+  if (!getCause(id)) notFound();
   return <FundraiserPage id={id} />;
 }

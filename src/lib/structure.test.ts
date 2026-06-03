@@ -10,6 +10,7 @@ import {
   getProfile,
   listCauses,
   listCommunities,
+  listProfiles,
   siblingCauses,
 } from "@/lib/structure";
 
@@ -33,9 +34,10 @@ describe("structure helpers", () => {
     expect(getProfile("janahan")).toBe(PROFILES.janahan);
   });
 
-  it("lists every community and cause", () => {
+  it("lists every community, cause, and profile", () => {
     expect(listCommunities()).toEqual(Object.values(COMMUNITIES));
     expect(listCauses()).toEqual(Object.values(FUNDRAISERS));
+    expect(listProfiles()).toEqual(Object.values(PROFILES));
   });
 
   it("walks the hierarchy down: a community's causes", () => {

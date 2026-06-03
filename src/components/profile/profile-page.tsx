@@ -2,7 +2,8 @@
 
 import { type CSSProperties } from "react";
 
-import { COMMUNITIES, FUNDRAISERS, PROFILES, money } from "@/lib/data";
+import { money } from "@/lib/data";
+import { getCause, getCommunity, getProfile } from "@/lib/structure";
 import { useSite } from "@/components/app/site-provider";
 import { Avatar } from "@/components/shared/avatar";
 import { Btn } from "@/components/shared/btn";
@@ -10,7 +11,7 @@ import { Constellation } from "@/components/profile/constellation";
 
 export function ProfilePage({ handle }: { handle: string }) {
   const site = useSite();
-  const p = PROFILES[handle];
+  const p = getProfile(handle);
   if (!p) return null;
   const first = p.name.split(" ")[0];
 
@@ -82,14 +83,14 @@ export function ProfilePage({ handle }: { handle: string }) {
                 className="impact-card"
                 style={{ "--hue": im.accent } as CSSProperties}
                 onClick={() =>
-                  site.goNode({ id: im.cause, kind: COMMUNITIES[im.cause] ? "community" : "fundraiser" })
+                  site.goNode({ id: im.cause, kind: getCommunity(im.cause) ? "community" : "fundraiser" })
                 }
               >
                 <div className="impact-metric">{im.metric}</div>
                 <div className="impact-outcome">{im.outcome}</div>
                 <div className="impact-cause">
                   <span className="impact-dot" />{" "}
-                  {FUNDRAISERS[im.cause] ? FUNDRAISERS[im.cause].title : "Wildfire Watch"}
+                  {getCause(im.cause)?.title ?? "Wildfire Watch"}
                 </div>
               </button>
             ))}
