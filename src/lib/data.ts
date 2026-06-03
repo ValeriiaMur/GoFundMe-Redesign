@@ -1,4 +1,4 @@
-// Ported mock universe for the Beacon / GoFundMe design.
+// Ported mock universe for the GoFundMe design.
 // Each cause references a world clip key from the optimized manifest.
 import type { WorldKey } from "@/lib/worlds";
 

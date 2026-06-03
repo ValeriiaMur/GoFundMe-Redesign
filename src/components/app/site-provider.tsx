@@ -43,8 +43,9 @@ export interface SiteContextValue {
   follow: (id: string) => void;
   join: () => void;
   followPerson: () => void;
-  goFundraiser: (id: string) => void;
-  goCommunity: () => void;
+  goHome: () => void;
+  goCommunity: (handle: string) => void;
+  goCause: (id: string) => void;
   goProfile: (handle: string) => void;
   goNode: (node: { id: string; kind: "fundraiser" | "community" }) => void;
 }
@@ -126,8 +127,12 @@ export function SiteProvider({ children }: { children: ReactNode }) {
     [prepend, showToast],
   );
 
-  const goFundraiser = useCallback((id: string) => router.push(`/cause/${id}`), [router]);
-  const goCommunity = useCallback(() => router.push(`/`), [router]);
+  const goHome = useCallback(() => router.push(`/`), [router]);
+  const goCause = useCallback((id: string) => router.push(`/f/${id}`), [router]);
+  const goCommunity = useCallback(
+    (handle: string) => router.push(`/communities/${handle}`),
+    [router],
+  );
   const goProfile = useCallback((handle: string) => router.push(`/u/${handle}`), [router]);
 
   const value: SiteContextValue = useMemo(
@@ -154,10 +159,14 @@ export function SiteProvider({ children }: { children: ReactNode }) {
         setFollowingPerson((v) => !v);
         showToast(followingPerson ? "Unfollowed." : "Following Janahan. You'll see their lights.");
       },
-      goFundraiser,
+      goHome,
       goCommunity,
+      goCause,
       goProfile,
-      goNode: (n) => (n.kind === "community" ? goCommunity() : goFundraiser(n.id)),
+      goNode: (n) =>
+        n.kind === "community"
+          ? goCommunity(COMMUNITIES[n.id]?.handle ?? n.id)
+          : goCause(n.id),
     }),
     [
       raisedById,
@@ -167,8 +176,9 @@ export function SiteProvider({ children }: { children: ReactNode }) {
       followingPerson,
       feed,
       showToast,
-      goFundraiser,
+      goHome,
       goCommunity,
+      goCause,
       goProfile,
     ],
   );
