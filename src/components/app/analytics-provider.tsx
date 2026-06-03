@@ -4,18 +4,24 @@ import { useEffect, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 
 import { sectionForPath, track } from "@/lib/analytics";
+import { initPostHog } from "@/lib/posthog";
 
 /**
- * Fires a `page_view` event on every client navigation. These power the
- * "Repeat Visits" metric (PostHog derives unique/returning users from them).
+ * Initializes PostHog (the vendor sink) and fires a typed `page_view` on every
+ * client navigation. These power the "Repeat Visits" metric — PostHog derives
+ * unique/returning users from them.
  *
- * This component is vendor-neutral on purpose: it only calls `track()`. To send
- * events to PostHog, install posthog-js and, once on the client, point the sink
- * at it — e.g. `setAnalyticsSink((p) => posthog.capture(p.event, p.properties))`.
- * Until a sink is installed, `track()` is a safe no-op.
+ * The event taxonomy stays vendor-neutral in `analytics.ts`; this provider just
+ * attaches the PostHog adapter via `initPostHog()` (idempotent, client-only).
+ * The init effect runs before the page_view effect on mount, so the sink is
+ * installed before the first event fires.
  */
 export function AnalyticsProvider({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+
+  useEffect(() => {
+    initPostHog();
+  }, []);
 
   useEffect(() => {
     track({ name: "page_view", props: { path: pathname, section: sectionForPath(pathname) } });

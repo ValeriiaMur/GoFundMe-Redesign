@@ -34,7 +34,7 @@ export function toCapture(e: AnalyticsEvent): CapturePayload {
   return { event: e.name, properties: { ...e.props } };
 }
 
-type Sink = (payload: CapturePayload) => void;
+export type Sink = (payload: CapturePayload) => void;
 
 const noopSink: Sink = () => {};
 let sink: Sink = noopSink;
@@ -42,6 +42,16 @@ let sink: Sink = noopSink;
 /** Install the destination for tracked events (e.g. posthog.capture). Pass null to reset. */
 export function setAnalyticsSink(fn: Sink | null): void {
   sink = fn ?? noopSink;
+}
+
+/**
+ * Adapt a backend's capture function (e.g. `posthog.capture`) into a Sink.
+ * Vendor-neutral and pure, so the wiring is unit-testable without the SDK.
+ */
+export function captureSink(
+  capture: (event: string, properties: Record<string, unknown>) => void,
+): Sink {
+  return (p) => capture(p.event, p.properties);
 }
 
 /** Emit an event. Never throws — analytics must not be able to break the product. */

@@ -1,62 +1,57 @@
-PRD
+# PRD — Reimagine GoFundMe
 
-This is an example of a GofundMe Fundraiser Page: https://www.gofundme.com/f/realtime-alerts-for-wildfire-safety-r5jkk
-This is an example of a GoFundMe Community Page: https://www.gofundme.com/communities/watch-duty
-This is an example of a GofundMe Profile: https://www.gofundme.com/u/janahan
+## References
 
-Think outside of the box and use AI to build your own version of a Profile, Fundraiser and Community pages. Tie them together to make an engaging experience.
+Example pages to draw inspiration from:
 
-Problem & Context
+- **Fundraiser:** https://www.gofundme.com/f/realtime-alerts-for-wildfire-safety-r5jkk
+- **Community:** https://www.gofundme.com/communities/watch-duty
+- **Profile:** https://www.gofundme.com/u/janahan
 
-Business Context
+Think outside the box and use AI to build your own version of a **Profile**, **Fundraiser**, and **Community** page. Tie them together to make an engaging experience.
 
-We are looking reimagine ways that a GoFundMe can be a more engaging destination. Where like minded people can not only support their loved ones but also unite around causes they care about.
-- You are free to think outside the box and come up with ideas that would be creative and engaging.
-- Would make people want to come back 
-- You can build all three of them or focus on just one or two. 
+## Problem & context
 
-Impact Metrics
+### Business context
 
-Repeat Visits, Meaning Actions (Donate, Share, Follow)
+We are looking to reimagine ways that a GoFundMe can be a more engaging destination — where like-minded people can not only support their loved ones but also unite around causes they care about.
 
-Requirements & Success Criteria
+- Feel free to think outside the box and come up with creative, engaging ideas.
+- It should make people want to come back.
+- You can build all three pages, or focus on just one or two.
 
-Functional Requirements
+### Impact metrics
 
-- Pages successfully load, fast response times.
-- The three pages (profile, fundraiser, community) are seamlessly integrated and intuitive
-- well instrumented, explain what metrics you'll capture and why
+- **Repeat visits**
+- **Meaningful actions** — Donate, Share, Follow
 
-Performance Benchmarks
+## Requirements & success criteria
 
-Page load times
+### Functional requirements
 
-Code Quality Expectations
+- Pages load successfully with fast response times.
+- The three pages (Profile, Fundraiser, Community) are seamlessly integrated and intuitive.
+- Well instrumented — explain what metrics you'll capture and why.
 
-Be able to explain the tradeoffs you made.
+### Performance benchmarks
 
-Time Constraints
+- Page load times.
 
-1 week.
+### Code quality expectations
 
-Technical Contact
+- Be able to explain the tradeoffs you made.
 
-No.
+### Time constraints
 
-Technology
+- 1 week.
 
-Required Languages
+### Technical contact
 
-Up to you.
+- None.
 
-Dev Tools
+## Technology
 
-React / Next.js preferred, but you are welcome to roll your own.
-
-Cloud Platforms
-
-AWS preferred, but you decide what works for you.
-
-Off-Limits Tech
-
-None
+- **Required languages:** up to you.
+- **Dev tools:** React / Next.js preferred, but you're welcome to roll your own.
+- **Cloud platforms:** AWS preferred, but you decide what works for you.
+- **Off-limits tech:** none.

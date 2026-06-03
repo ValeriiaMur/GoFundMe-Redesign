@@ -35,7 +35,6 @@ export interface Fundraiser {
   title: string;
   blurb: string;
   world: WorldKey;
-  worldName: string;
   tagline?: string;
   accent: number;
   scenes?: Scene[];
@@ -57,7 +56,6 @@ export interface Community {
   name: string;
   handle: string;
   world: WorldKey;
-  worldName: string;
   accent: number;
   tagline: string;
   about: string;
@@ -161,7 +159,6 @@ export const FUNDRAISERS: Record<string, Fundraiser> = {
     blurb:
       "An open, ad-free alert network that warns mountain towns the moment a fire sparks — built by the people who live there.",
     world: "signal",
-    worldName: "The Signal",
     tagline: "Forty minutes is too long to wait.",
     accent: 52,
     scenes: [
@@ -200,7 +197,6 @@ export const FUNDRAISERS: Record<string, Fundraiser> = {
     blurb:
       "When the evacuation order comes, no paw gets left behind. A mobile shelter + transport crew for the watch.",
     world: "shop",
-    worldName: "The Shelter",
     accent: 28,
     organizer: PEOPLE.lin,
     community: "watch",
@@ -228,7 +224,6 @@ export const FUNDRAISERS: Record<string, Fundraiser> = {
     title: "Replant the ridge",
     blurb: "Two thousand acres burned. We're bringing the canopy — and the creek — back to Cedar Hollow.",
     world: "pond",
-    worldName: "The Regrowth",
     accent: 168,
     organizer: PEOPLE.noor,
     community: "watch",
@@ -259,7 +254,6 @@ export const COMMUNITIES: Record<string, Community> = {
     name: "Wildfire Watch",
     handle: "wildfire-watch",
     world: "camp",
-    worldName: "The Watch",
     accent: 52,
     tagline: "A volunteer watch keeping the canyon towns ahead of the fire.",
     about:

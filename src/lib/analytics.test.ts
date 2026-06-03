@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest";
 
 import {
+  captureSink,
   sectionForPath,
   setAnalyticsSink,
   toCapture,
@@ -39,6 +40,15 @@ describe("analytics taxonomy", () => {
       throw new Error("network down");
     });
     expect(() => track({ name: "join_community", props: { communityId: "watch", joined: true } })).not.toThrow();
+  });
+
+  it("captureSink forwards tracked events to a backend capture fn as (event, properties)", () => {
+    const calls: Array<[string, Record<string, unknown>]> = [];
+    setAnalyticsSink(captureSink((event, properties) => calls.push([event, properties])));
+
+    track({ name: "donate", props: { causeId: "alerts", amount: 50 } });
+
+    expect(calls).toEqual([["donate", { causeId: "alerts", amount: 50 }]]);
   });
 
   it("derives the section from a path", () => {

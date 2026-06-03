@@ -43,7 +43,7 @@ The brief asks for instrumentation around **Repeat Visits** and **Meaningful Act
 | `follow` | follow a cause or person | "keep watch" | Retention intent; target + on/off |
 | `join_community` | join/leave a community | — | Community growth |
 
-**Design:** events flow through a pluggable `sink` (`setAnalyticsSink`). Until a sink is installed, `track()` is a safe no-op and never throws. **PostHog is wired by the user**: install posthog-js and point the sink at it — `setAnalyticsSink((p) => posthog.capture(p.event, p.properties))` (documented in `analytics-provider.tsx`). `.env` expects `NEXT_PUBLIC_POSTHOG_KEY` and `NEXT_PUBLIC_POSTHOG_HOST`.
+**Design:** events flow through a pluggable `sink` (`setAnalyticsSink`). Until a sink is installed, `track()` is a safe no-op and never throws. **PostHog is wired**: [`posthog.ts`](src/lib/posthog.ts) is the only file importing posthog-js — `initPostHog()` (client-only, idempotent) inits the SDK and installs `captureSink((event, props) => posthog.capture(...))`. `AnalyticsProvider` calls it on mount before the first `page_view`. Autocapture pageviews are disabled (`capture_pageview: false`) so our typed `page_view` is the single source; `capture_pageleave` stays on for dwell time. Config comes from `.env`: `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST`. No key → silent no-op.
 
 ## Decisions & tradeoffs
 
