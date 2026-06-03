@@ -20,6 +20,8 @@ export interface WorldVideoProps {
   priority?: boolean;
   /** Pre-load margin for lazy loading. */
   rootMargin?: string;
+  /** Poster-only: never mounts the video (e.g. tiny rail thumbnails). */
+  still?: boolean;
 }
 
 /**
@@ -33,12 +35,13 @@ export function WorldVideo({
   lazy = false,
   priority = false,
   rootMargin,
+  still = false,
 }: WorldVideoProps) {
   const reducedMotion = usePrefersReducedMotion();
   const [inViewRef, inView] = useInView<HTMLDivElement>({ rootMargin });
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const active = !reducedMotion && (priority || !lazy || inView);
+  const active = !still && !reducedMotion && (priority || !lazy || inView);
 
   useEffect(() => {
     if (active) videoRef.current?.play?.().catch(() => {});

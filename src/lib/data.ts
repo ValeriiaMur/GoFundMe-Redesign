@@ -33,6 +33,8 @@ export interface Scene {
 export interface Fundraiser {
   id: string;
   title: string;
+  /** Short display name for dense lists (e.g. the watch-room rail). */
+  short: string;
   blurb: string;
   world: WorldKey;
   tagline?: string;
@@ -156,6 +158,7 @@ export const FUNDRAISERS: Record<string, Fundraiser> = {
   alerts: {
     id: "alerts",
     title: "Real-time alerts for wildfire safety",
+    short: "Real-time wildfire alerts",
     blurb:
       "An open, ad-free alert network that warns mountain towns the moment a fire sparks — built by the people who live there.",
     world: "signal",
@@ -194,9 +197,11 @@ export const FUNDRAISERS: Record<string, Fundraiser> = {
   shelter: {
     id: "shelter",
     title: "Evacuate & shelter the animals",
+    short: "Shelter the animals",
     blurb:
       "When the evacuation order comes, no paw gets left behind. A mobile shelter + transport crew for the watch.",
     world: "shop",
+    tagline: "No paw gets left behind.",
     accent: 28,
     organizer: PEOPLE.lin,
     community: "watch",
@@ -222,8 +227,10 @@ export const FUNDRAISERS: Record<string, Fundraiser> = {
   replant: {
     id: "replant",
     title: "Replant the ridge",
+    short: "Replant the ridge",
     blurb: "Two thousand acres burned. We're bringing the canopy — and the creek — back to Cedar Hollow.",
     world: "pond",
+    tagline: "Every light you plant here is, quite literally, a tree.",
     accent: 168,
     organizer: PEOPLE.noor,
     community: "watch",
@@ -263,7 +270,7 @@ export const COMMUNITIES: Record<string, Community> = {
     lanterns: 1201,
     fundraisers: ["alerts", "shelter", "replant"],
     stewards: [PEOPLE.mara, PEOPLE.janahan, PEOPLE.lin, PEOPLE.noor],
-    pulse: "Fire weather: elevated",
+    pulse: "",
   },
 };
 

@@ -1,12 +1,15 @@
 import { money } from "@/lib/data";
 import { fundedPct } from "@/lib/progress";
+import { cn } from "@/lib/utils";
 
 export interface ProgressMeterProps {
   raised: number;
   goal: number;
   accent?: number;
   supporters?: number;
+  daysLeft?: number;
   showBar?: boolean;
+  size?: "md" | "lg";
 }
 
 /** Donation meter: amount raised, a fill bar, and percent funded. */
@@ -15,11 +18,13 @@ export function ProgressMeter({
   goal,
   accent = 52,
   supporters,
+  daysLeft,
   showBar = true,
+  size = "md",
 }: ProgressMeterProps) {
   const pct = fundedPct(raised, goal);
   return (
-    <div className="meter">
+    <div className={cn("meter", size === "lg" && "meter-lg")}>
       <div className="meter-top">
         <span className="meter-raised">{money(raised)}</span>
         <span className="meter-goal">raised of {money(goal)}</span>
@@ -37,7 +42,16 @@ export function ProgressMeter({
       )}
       <div className="meter-sub">
         <b>{pct.toFixed(0)}% funded</b>
-        {supporters != null && <> · {supporters.toLocaleString()} keeping watch</>}
+        {supporters != null && (
+          <>
+            {" "}· <b>{supporters.toLocaleString()}</b> supporters
+          </>
+        )}
+        {daysLeft != null && (
+          <>
+            {" "}· <b>{daysLeft}</b> days left
+          </>
+        )}
       </div>
     </div>
   );

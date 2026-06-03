@@ -74,6 +74,13 @@ describe("WorldVideo", () => {
     expect(img).toHaveAttribute("src", "/worlds/test.jpg");
   });
 
+  it("renders the poster only (sparks still ride on top) when still", () => {
+    mockMatchMedia(false);
+    const { container } = render(<WorldVideo world={world} still />);
+    expect(container.querySelector("video")).toBeNull();
+    expect(container.querySelector("img")).toHaveAttribute("src", "/worlds/test.jpg");
+  });
+
   it("defers the video until scrolled into view when lazy", () => {
     mockMatchMedia(false);
     const { container } = render(<WorldVideo world={world} lazy />);

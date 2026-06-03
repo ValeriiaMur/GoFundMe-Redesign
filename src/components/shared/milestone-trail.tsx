@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 import { money, type Milestone } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
@@ -5,10 +7,31 @@ export interface MilestoneTrailProps {
   milestones: Milestone[];
   raised: number;
   accent?: number;
+  /** "vertical" timeline (default) or the watch-room "horizontal" trail. */
+  layout?: "vertical" | "horizontal";
 }
 
-/** Vertical timeline of funding milestones; reached ones light up. */
-export function MilestoneTrail({ milestones, raised, accent = 52 }: MilestoneTrailProps) {
+/** Timeline of funding milestones; reached ones light up from live `raised`. */
+export function MilestoneTrail({
+  milestones,
+  raised,
+  accent = 52,
+  layout = "vertical",
+}: MilestoneTrailProps) {
+  if (layout === "horizontal") {
+    return (
+      <div className="mtrail-h" style={{ "--h": accent } as CSSProperties}>
+        {milestones.map((m, i) => (
+          <div key={i} className={cn("ms", raised >= m.at && "done")}>
+            <span className="ms-dot" />
+            <div className="ms-label">{m.label}</div>
+            <div className="ms-at">{money(m.at)}</div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="mtrail">
       {milestones.map((m, i) => {
