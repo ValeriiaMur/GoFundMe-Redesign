@@ -3,6 +3,7 @@
 import { useState, type CSSProperties } from "react";
 
 import type { Community } from "@/lib/data";
+import { track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { DoorwayFeature } from "@/components/communities/doorway-feature";
 import { DoorwayTile } from "@/components/communities/doorway-tile";
@@ -38,7 +39,7 @@ export function Doorway({ communities, raisedOf, progressOf, onEnter }: DoorwayP
 
       <div className="idx-body">
         <div className="idx-head">
-          <p className="kicker" style={{ "--accent": "oklch(0.6 0.14 48)" } as CSSProperties}>
+          <p className="kicker" style={{ "--accent": "var(--ember)" } as CSSProperties}>
             All communities
           </p>
           <h2 className="block-h">{communities.length} gathering right now</h2>
@@ -63,7 +64,12 @@ export function Doorway({ communities, raisedOf, progressOf, onEnter }: DoorwayP
                   community={c}
                   raised={raisedOf(c)}
                   active={i === previewedIndex}
-                  onPreview={() => setPreviewedIndex(i)}
+                  onPreview={() => {
+                    if (i !== previewedIndex) {
+                      track({ name: "preview_community", props: { communityId: c.id } });
+                    }
+                    setPreviewedIndex(i);
+                  }}
                   onEnter={() => onEnter(c.handle)}
                 />
               ))}

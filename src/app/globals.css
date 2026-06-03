@@ -105,6 +105,24 @@ body {
 .dim { color: var(--dim); }
 .app { min-height: 100vh; }
 
+/* ---- focus: one cohesive keyboard ring for every interactive element ----
+   `outline` follows each element's own border-radius, so a single rule fits
+   pills, cards and inputs alike. Only shows for keyboard nav (:focus-visible). */
+.app :is(a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 3px;
+  border-radius: inherit;
+}
+/* Over bright ambient video, pair the ring with a dark halo so it reads on any frame. */
+.on-video-label ~ * :focus-visible,
+.chero-cta :focus-visible,
+.idx-feature-cap :focus-visible,
+.phero-actions :focus-visible,
+.wr-detail-cap :focus-visible {
+  outline-color: oklch(0.96 0.06 84);
+  box-shadow: 0 0 0 5px oklch(0.08 0.02 258 / 0.55);
+}
+
 /* ---- header ---- */
 .hdr { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; gap: 18px; padding: 11px clamp(14px, 3vw, 30px); background: var(--glass); backdrop-filter: blur(18px) saturate(1.2); border-bottom: 1px solid var(--line-soft); }
 .hdr-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
@@ -246,6 +264,14 @@ body {
 .fhero.immersive .actionbar .btn-primary { color: #fff; background: linear-gradient(180deg, oklch(0.73 0.17 50), oklch(0.61 0.19 42)); box-shadow: 0 14px 32px -12px oklch(0.55 0.19 44), inset 0 0 0 1px oklch(1 0 0 / 0.22); }
 .fhero.immersive .actionbar .btn-primary:hover { filter: brightness(1.06); box-shadow: 0 18px 40px -12px oklch(0.55 0.19 44); }
 
+/* Same orchestrated arrival as the discover hero, for a consistent first beat. */
+.fhero.immersive .hero-meta > * { animation: heroRise 0.72s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+.fhero.immersive .hero-title { animation-delay: 0.06s; }
+.fhero.immersive .hero-blurb { animation-delay: 0.16s; }
+.fhero.immersive .hero-org { animation-delay: 0.26s; }
+.fhero.immersive .hero-progress { animation-delay: 0.36s; }
+.fhero.immersive .actionbar { animation-delay: 0.46s; }
+
 .fbody { max-width: var(--maxw); margin: 0 auto; padding: clamp(28px, 5vw, 60px) clamp(16px, 4vw, 40px) 80px; display: grid; grid-template-columns: 1fr 360px; gap: clamp(28px, 4vw, 56px); align-items: start; }
 .fbody-main { min-width: 0; }
 .updates { display: flex; flex-direction: column; gap: 18px; }
@@ -346,6 +372,15 @@ body {
 .mtrail-h .ms.done .ms-label { color: var(--dim); }
 .mtrail-h .ms-at { font-family: var(--font-mono-x); font-size: 10.5px; color: var(--mute); }
 
+/* Orchestrated arrival: hero copy rises in sequence over the ambient video.
+   Scoped to .dhero so the shared .chero (community) hero is untouched. */
+.dhero .chero-overlay > * { animation: heroRise 0.72s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+.dhero .chero-pulse { animation-delay: 0.06s; }
+.dhero .chero-name { animation-delay: 0.16s; }
+.dhero .chero-tag { animation-delay: 0.28s; }
+.dhero .chero-cta { animation-delay: 0.4s; }
+@keyframes heroRise { from { opacity: 0; transform: translateY(18px); } }
+
 /* ---- home / discover body ---- */
 .home-body { padding: clamp(26px, 3.5vw, 44px) clamp(20px, 4vw, 48px) 56px; display: flex; flex-direction: column; gap: clamp(36px, 5vw, 60px); }
 .home-head { margin-bottom: 22px; }
@@ -357,6 +392,9 @@ body {
 
 /* ---- communities index: the doorway ---- */
 .idx-intro { padding: clamp(96px, 13vh, 130px) clamp(20px, 4vw, 48px) 0; }
+.idx-intro > * { animation: heroRise 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) backwards; }
+.idx-intro-h { animation-delay: 0.04s; }
+.idx-intro-sub { animation-delay: 0.16s; }
 .idx-intro-h { font-family: var(--font-display); font-weight: 500; font-size: clamp(34px, 5vw, 60px); line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 14px; max-width: 18ch; }
 .idx-intro-sub { color: var(--dim); font-size: clamp(15px, 1.6vw, 19px); max-width: 56ch; margin: 0; }
 .idx-body { padding: clamp(28px, 4vw, 48px) clamp(20px, 4vw, 48px) 60px; }
@@ -449,9 +487,9 @@ body {
 .cnode-ring { position: absolute; width: calc(42px * var(--s)); height: calc(16px * var(--s)); border-radius: 50%; border: 1.5px solid oklch(0.9 0.12 var(--hue) / 0.7); box-shadow: 0 0 10px oklch(0.85 0.14 var(--hue) / 0.5), inset 0 0 6px oklch(0.85 0.14 var(--hue) / 0.3); transform: rotate(-24deg); z-index: 1; }
 .cnode-halo { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, oklch(0.84 0.16 var(--hue) / 0.4), transparent 64%); animation: haloPulse 3.6s ease-in-out infinite; }
 @keyframes haloPulse { 0%, 100% { transform: scale(0.8); opacity: 0.5; } 50% { transform: scale(1.3); opacity: 0.95; } }
-.cnode:hover .cnode-core, .cnode.on .cnode-core { transform: scale(1.35); }
+.cnode:hover .cnode-core, .cnode.on .cnode-core, .cnode:focus-visible .cnode-core { transform: scale(1.35); }
 .cnode-label { position: absolute; top: calc(100% + 7px); left: 50%; transform: translateX(-50%) translateY(4px); white-space: nowrap; text-align: center; opacity: 0; transition: 0.2s; pointer-events: none; }
-.cnode:hover .cnode-label, .cnode.on .cnode-label { opacity: 1; transform: translateX(-50%) translateY(0); }
+.cnode:hover .cnode-label, .cnode.on .cnode-label, .cnode:focus-visible .cnode-label { opacity: 1; transform: translateX(-50%) translateY(0); }
 .cnode-label b { display: block; color: #fff; font-size: 14px; font-weight: 600; text-shadow: 0 1px 10px oklch(0.05 0.02 260 / 0.8); }
 .cnode-label span { font-family: var(--font-mono-x); font-size: 11px; color: oklch(0.86 0.03 84 / 0.85); }
 
@@ -467,7 +505,8 @@ body {
 
 .pbody-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 48px); margin-top: 8px; }
 .lwall { display: flex; flex-direction: column; gap: 14px; }
-.lcard { display: flex; gap: 14px; background: var(--bg-1); border: 1px solid var(--line-soft); border-radius: 16px; padding: 16px 18px; }
+.lcard { display: flex; gap: 14px; margin: 0; background: var(--bg-1); border: 1px solid var(--line-soft); border-radius: 16px; padding: 16px 18px; }
+.lcard-msg { border: none; } /* neutralize the default blockquote left border/indent */
 .lcard-flame { flex: none; width: 12px; height: 16px; border-radius: 6px 6px 8px 8px; background: radial-gradient(circle at 50% 35%, oklch(0.95 0.1 88), oklch(0.82 0.14 78) 60%); box-shadow: 0 0 16px -1px oklch(0.84 0.14 84 / 0.8); margin-top: 3px; animation: lanternFloat 3.4s ease-in-out infinite; }
 .lcard-msg { font-family: var(--font-display); font-style: italic; font-size: 16px; line-height: 1.45; margin: 0 0 9px; color: var(--text); }
 .lcard-from { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--dim); }
@@ -521,9 +560,18 @@ body {
   .phero-hint { top: 64px; right: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .lantern, .cel-light, .bgstar, .lantern-big, .lcard-flame { animation: none !important; }
-  .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
-  .wr-swap { animation: none !important; }
+  /* Canonical reset: stop every looping animation and near-instant all motion,
+     rather than maintaining a hand-picked list that drifts out of date. */
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: -1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Guarantee content that animates in from hidden is shown, not stuck invisible. */
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .wr-swap, .idx-feature-cap { opacity: 1 !important; transform: none !important; }
 }
 
 /* --- Scroll reveals --- */

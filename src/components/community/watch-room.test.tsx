@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { WatchRoom } from "@/components/community/watch-room";
 import { ACTIVITY, COMMUNITIES, FUNDRAISERS } from "@/lib/data";
 import { causesOf } from "@/lib/structure";
+import { setAnalyticsSink, type CapturePayload } from "@/lib/analytics";
 
 function mockMatchMedia() {
   vi.stubGlobal(
@@ -32,7 +33,10 @@ function mockMatchMedia() {
 }
 
 beforeEach(mockMatchMedia);
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  setAnalyticsSink(null);
+});
 
 const community = COMMUNITIES.watch;
 
@@ -76,6 +80,17 @@ describe("WatchRoom", () => {
     await userEvent.click(screen.getByText("Shelter the animals"));
     await userEvent.click(screen.getByRole("button", { name: "Plant a light" }));
     expect(onDonate).toHaveBeenCalledWith("shelter");
+  });
+
+  it("tracks select_front when a front is picked", async () => {
+    const seen: CapturePayload[] = [];
+    setAnalyticsSink((p) => seen.push(p));
+    renderRoom();
+    await userEvent.click(screen.getByText("Shelter the animals"));
+    expect(seen).toContainEqual({
+      event: "select_front",
+      properties: { causeId: "shelter", communityId: "watch" },
+    });
   });
 
   it("filters the live feed to the selected front and the community", () => {

@@ -4,6 +4,7 @@ import { useState, type CSSProperties } from "react";
 
 import type { Activity, Community } from "@/lib/data";
 import type { Cause } from "@/lib/structure";
+import { track } from "@/lib/analytics";
 import { FrontRow } from "@/components/community/front-row";
 import { FrontDetail } from "@/components/community/front-detail";
 
@@ -40,10 +41,7 @@ export function WatchRoom({
   return (
     <section className="wr-body">
       <div className="wr-head">
-        <p
-          className="kicker"
-          style={{ "--accent": "oklch(0.6 0.14 48)" } as CSSProperties}
-        >
+        <p className="kicker" style={{ "--accent": "var(--ember)" } as CSSProperties}>
           The watch · {causes.length} fronts
         </p>
         <h2 className="block-h">Three fronts, one watch</h2>
@@ -61,7 +59,16 @@ export function WatchRoom({
               cause={cause}
               raised={raisedFor(cause.id)}
               active={cause.id === selected.id}
-              onSelect={() => setSelectedCauseId(cause.id)}
+              selectable
+              onSelect={() => {
+                if (cause.id !== selected.id) {
+                  track({
+                    name: "select_front",
+                    props: { causeId: cause.id, communityId: community.id },
+                  });
+                }
+                setSelectedCauseId(cause.id);
+              }}
             />
           ))}
         </div>

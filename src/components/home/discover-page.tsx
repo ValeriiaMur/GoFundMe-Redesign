@@ -58,7 +58,7 @@ export function DiscoverPage() {
       <div className="home-body">
         <section>
           <div className="home-head">
-            <p className="kicker" style={{ "--accent": "oklch(0.6 0.14 48)" } as CSSProperties}>
+            <p className="kicker" style={{ "--accent": "var(--ember)" } as CSSProperties}>
               Communities
             </p>
             <h2 className="block-h">Step inside a gathering</h2>
@@ -84,7 +84,7 @@ export function DiscoverPage() {
 
         <section>
           <div className="home-head">
-            <p className="kicker" style={{ "--accent": "oklch(0.6 0.14 48)" } as CSSProperties}>
+            <p className="kicker" style={{ "--accent": "var(--ember)" } as CSSProperties}>
               Fundraisers
             </p>
             <h2 className="block-h">Where help is needed now</h2>

@@ -76,7 +76,7 @@ export function ScrollyStory({ f, intensity = 1 }: ScrollyStoryProps) {
           );
         })}
 
-        <div className="scrolly-rail">
+        <div className="scrolly-rail" aria-hidden>
           {scenes.map((s, i) => (
             <span
               key={i}
@@ -86,7 +86,7 @@ export function ScrollyStory({ f, intensity = 1 }: ScrollyStoryProps) {
           ))}
         </div>
 
-        <div className="scrolly-cue" style={{ opacity: prog < 0.035 ? 0.7 : 0 }}>
+        <div className="scrolly-cue" aria-hidden style={{ opacity: prog < 0.035 ? 0.7 : 0 }}>
           scroll the story ↓
         </div>
       </div>

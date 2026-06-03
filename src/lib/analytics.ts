@@ -22,7 +22,14 @@ export type AnalyticsEvent =
     }
   | { name: "share_lantern"; props: { targetKind: ActionTargetKind; targetId: string } }
   | { name: "follow"; props: { targetKind: ActionTargetKind; targetId: string; following: boolean } }
-  | { name: "join_community"; props: { communityId: string; joined: boolean } };
+  | { name: "join_community"; props: { communityId: string; joined: boolean } }
+  // Funnel top: the donate modal opened (intent) — pairs with `donate` (conversion).
+  | { name: "donate_modal_opened"; props: { causeId: string; communityId?: string } }
+  // Engagement gestures on the master-detail surfaces — leading indicators of repeat visits.
+  | { name: "select_front"; props: { causeId: string; communityId: string } }
+  | { name: "preview_community"; props: { communityId: string } }
+  // Performance benchmark (PRD): Core Web Vitals per path. See `vitals.ts`.
+  | { name: "perf_vital"; props: { metric: string; value: number; rating?: string; path: string } };
 
 export interface CapturePayload {
   event: string;

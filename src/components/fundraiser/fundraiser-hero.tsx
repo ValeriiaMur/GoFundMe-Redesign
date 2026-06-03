@@ -39,7 +39,9 @@ export function FundraiserHero({ f, raised, state, on, intensity = 1 }: Fundrais
           <ActionBar fundraiser={f} state={state} on={on} />
         </div>
       </div>
-      <div className="scrolldown">scroll</div>
+      <div className="scrolldown" aria-hidden>
+        scroll
+      </div>
     </section>
   );
 }

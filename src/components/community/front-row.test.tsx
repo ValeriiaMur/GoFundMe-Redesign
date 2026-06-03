@@ -48,4 +48,18 @@ describe("FrontRow", () => {
     await userEvent.click(screen.getByRole("button"));
     expect(onSelect).toHaveBeenCalledOnce();
   });
+
+  it("exposes aria-pressed only as a selectable toggle (rail), not as a nav button", () => {
+    const { rerender } = render(
+      <FrontRow cause={FUNDRAISERS.alerts} raised={184200} active onSelect={() => {}} />,
+    );
+    // Default (home navigation) — no toggle semantics.
+    expect(screen.getByRole("button")).not.toHaveAttribute("aria-pressed");
+
+    // Selectable (watch-room rail) — reflects the selected state.
+    rerender(
+      <FrontRow cause={FUNDRAISERS.alerts} raised={184200} active onSelect={() => {}} selectable />,
+    );
+    expect(screen.getByRole("button")).toHaveAttribute("aria-pressed", "true");
+  });
 });

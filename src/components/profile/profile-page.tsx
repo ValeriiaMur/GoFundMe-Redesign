@@ -103,15 +103,15 @@ export function ProfilePage({ handle }: { handle: string }) {
             <p className="block-sub">Wishes the watch sent back.</p>
             <div className="lwall">
               {p.lanternsReceived.map((l, i) => (
-                <div key={i} className="lcard">
-                  <span className="lcard-flame" />
+                <figure key={i} className="lcard">
+                  <span className="lcard-flame" aria-hidden />
                   <div className="lcard-body">
-                    <p className="lcard-msg">&ldquo;{l.msg}&rdquo;</p>
-                    <div className="lcard-from">
+                    <blockquote className="lcard-msg">&ldquo;{l.msg}&rdquo;</blockquote>
+                    <figcaption className="lcard-from">
                       <Avatar person={l.from} size={24} /> {l.from.name}
-                    </div>
+                    </figcaption>
                   </div>
-                </div>
+                </figure>
               ))}
             </div>
           </section>

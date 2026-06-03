@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { money, type Fundraiser } from "@/lib/data";
+import { track } from "@/lib/analytics";
 import { Modal } from "@/components/shared/modal";
 import { Btn } from "@/components/shared/btn";
 
@@ -19,6 +20,14 @@ export function DonateModal({ fundraiser, onClose, onConfirm }: DonateModalProps
   const [msg, setMsg] = useState("");
   const [custom, setCustom] = useState("");
   const value = custom ? parseInt(custom, 10) || 0 : amt;
+
+  // Top of the donate funnel: intent. Pairs with `donate` to measure drop-off.
+  useEffect(() => {
+    track({
+      name: "donate_modal_opened",
+      props: { causeId: fundraiser.id, communityId: fundraiser.community },
+    });
+  }, [fundraiser.id, fundraiser.community]);
 
   return (
     <Modal onClose={onClose} accent={fundraiser.accent}>

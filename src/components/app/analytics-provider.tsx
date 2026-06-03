@@ -4,6 +4,7 @@ import { useEffect, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 
 import { sectionForPath, track } from "@/lib/analytics";
+import { reportVital } from "@/lib/vitals";
 import { initPostHog } from "@/lib/posthog";
 
 /**
@@ -21,6 +22,22 @@ export function AnalyticsProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     initPostHog();
+    // PRD performance benchmark: capture Core Web Vitals as `perf_vital` events,
+    // tagged with the path being measured. Dynamic import keeps the listener out
+    // of the server bundle; each callback fires when its metric finalizes.
+    let cancelled = false;
+    import("web-vitals").then(({ onLCP, onCLS, onINP, onTTFB }) => {
+      if (cancelled) return;
+      const report = (m: { name: string; value: number; rating: string }) =>
+        reportVital(m, window.location.pathname);
+      onLCP(report);
+      onCLS(report);
+      onINP(report);
+      onTTFB(report);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {

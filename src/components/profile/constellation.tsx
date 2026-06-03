@@ -36,7 +36,7 @@ export function Constellation({ nodes, onSelect, variant = "card" }: Constellati
   return (
     <div className={cn("constel", variant, lit && "lit")}>
       <div className="constel-drift">
-        <svg className="constel-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <svg className="constel-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
           {lines.map((l) => (
             <line
               key={l.k}

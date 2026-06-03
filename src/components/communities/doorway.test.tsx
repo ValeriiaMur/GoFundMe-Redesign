@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 
 import { Doorway } from "@/components/communities/doorway";
 import { COMMUNITIES, PEOPLE, type Community } from "@/lib/data";
+import { setAnalyticsSink, type CapturePayload } from "@/lib/analytics";
 
 function mockEnvironment() {
   vi.stubGlobal(
@@ -31,7 +32,10 @@ function mockEnvironment() {
 }
 
 beforeEach(mockEnvironment);
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  setAnalyticsSink(null);
+});
 
 const watch = COMMUNITIES.watch;
 
@@ -94,6 +98,17 @@ describe("Doorway", () => {
     fireEvent.mouseEnter(screen.getByText("Tidewater Mutual").closest("button")!);
     expect(screen.getByRole("heading", { name: "Tidewater Mutual" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Wildfire Watch" })).not.toBeInTheDocument();
+  });
+
+  it("tracks preview_community when the doorway preview changes", () => {
+    const seen: CapturePayload[] = [];
+    setAnalyticsSink((p) => seen.push(p));
+    renderDoorway([watch, tide]);
+    fireEvent.mouseEnter(screen.getByText("Tidewater Mutual").closest("button")!);
+    expect(seen).toContainEqual({
+      event: "preview_community",
+      properties: { communityId: "tide" },
+    });
   });
 
   it("counts the gathering communities in the header", () => {

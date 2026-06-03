@@ -12,10 +12,17 @@ export interface FrontRowProps {
   raised: number;
   active: boolean;
   onSelect: () => void;
+  /**
+   * When true, the row acts as a selectable toggle (the watch-room rail picks
+   * which front the detail panel shows) and exposes `aria-pressed`. When false
+   * or omitted, it's a plain navigation button (the home rows) and stays free of
+   * toggle semantics that would mislead assistive tech.
+   */
+  selectable?: boolean;
 }
 
 /** A fundraiser ("front") row in the watch-room rail: glimmering thumb + thin meter. */
-export function FrontRow({ cause, raised, active, onSelect }: FrontRowProps) {
+export function FrontRow({ cause, raised, active, onSelect, selectable }: FrontRowProps) {
   const pct = fundedPct(raised, cause.goal);
   return (
     <button
@@ -23,7 +30,7 @@ export function FrontRow({ cause, raised, active, onSelect }: FrontRowProps) {
       className={cn("wr-row", active && "on")}
       style={{ "--h": cause.accent } as CSSProperties}
       onClick={onSelect}
-      aria-pressed={active}
+      aria-pressed={selectable ? active : undefined}
     >
       <div className="wr-row-thumb">
         {/* Poster only for performance — but the sparks still ride on top. */}
