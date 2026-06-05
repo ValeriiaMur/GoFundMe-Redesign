@@ -6,13 +6,10 @@ export interface AvatarProps {
   ring?: boolean;
 }
 
-/** Initials avatar tinted by the person's hue. */
+/** Single-initial avatar tinted by the person's hue (design handoff: two
+ *  letters read as cramped, clipped blobs at small sizes). */
 export function Avatar({ person, size = 36, ring = false }: AvatarProps) {
-  const initials = person.name
-    .split(" ")
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join("");
+  const initials = person.name[0]?.toUpperCase() ?? "";
   return (
     <div
       className="avatar"

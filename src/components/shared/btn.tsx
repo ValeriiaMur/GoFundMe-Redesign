@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export interface BtnProps {
   children: ReactNode;
-  kind?: "primary" | "ghost";
+  kind?: "primary" | "ghost" | "ink";
   accent?: number;
   size?: "md" | "lg";
   className?: string;

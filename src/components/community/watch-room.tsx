@@ -42,11 +42,11 @@ export function WatchRoom({
     <section className="wr-body">
       <div className="wr-head">
         <p className="kicker" style={{ "--accent": "var(--ember)" } as CSSProperties}>
-          The watch · {causes.length} fronts
+          This community · {causes.length} causes
         </p>
-        <h2 className="block-h">Three fronts, one watch</h2>
+        <h2 className="block-h">The causes this community carries</h2>
         <p className="block-sub">
-          Pick a front to see how it&rsquo;s holding. The room updates around you — no page to
+          Pick a cause to see how it&rsquo;s doing. The room updates around you — no page to
           leave.
         </p>
       </div>
