@@ -2,6 +2,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+<img width="1513" height="832" alt="Screenshot 2026-06-04 at 8 13 37 PM" src="https://github.com/user-attachments/assets/a445b483-5057-408e-bedb-741fd9c0e6ca" />
+https://gofundme-redesign.netlify.app/
+
 First, run the development server:
 
 ```bash
