@@ -25,7 +25,7 @@ const make = (key: WorldKey, name: string): WorldSource => ({
   poster: `/worlds/${key}.jpg`,
 });
 
-export const WORLDS: Record<WorldKey, WorldSource> = {
+const WORLDS: Record<WorldKey, WorldSource> = {
   hand: make("hand", "Outstretched hand"),
   signal: make("signal", "Signal in the dark"),
   camp: make("camp", "Starlit camp"),

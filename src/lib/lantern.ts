@@ -9,7 +9,7 @@ export const HERO_FOCAL = 0.62;
 
 /** Static pose for reduced motion: the "held & glowing" frame reads far
  *  stronger as a hero than the literal last frame (a distant dot). */
-export const STATIC_PROGRESS = 0.16;
+const STATIC_PROGRESS = 0.16;
 
 /** Public path for a 0-based frame index → `/hero/lantern/frame-001.webp`… */
 export function lanternFrameSrc(index: number): string {
@@ -24,7 +24,7 @@ export function staticFrameSrc(): string {
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 
 /** Smoothstep easing used across the hero choreography. */
-export const ease = (t: number) => t * t * (3 - 2 * t);
+const ease = (t: number) => t * t * (3 - 2 * t);
 
 /** Remaps `x` into 0–1 across the `[a, b]` band, clamped. */
 export const band = (x: number, a: number, b: number) => clamp01((x - a) / (b - a));
