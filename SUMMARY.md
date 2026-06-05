@@ -75,12 +75,7 @@ The brief asks for instrumentation around **Repeat Visits** and **Meaningful Act
 
 ## AI usage log
 
-How AI tooling was used across the project:
-
-- **Claude Code** — implementation: components, hooks, tests (TDD), CSS, refactors, and this living summary.
-- **Claude** — design: hero/handoff concepts, layout direction, copy and visual-language decisions.
-- **Vimeo** — source of the ambient world video clips (optimized into WebM/MP4 + posters in `public/worlds/`).
-- **Codex** — code reviews of changes.
+See [`AI-USAGE.md`](AI-USAGE.md): Claude Code (implementation), Claude (design), Vimeo (video sources), Codex (code reviews).
 
 ## What's next
 
